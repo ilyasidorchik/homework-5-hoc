@@ -16,38 +16,43 @@ export const withLoading = (WrappedComponent) => {
       )
     };
   }
-  
-
-  
 }
 
-/*
-  Следующий HOC - injector, его особенность в том,
-  что он не даёт перезаписать проп, который передаёт
-  в оборачиваемый компонент
+export const addLoggedInUser = (WrappedComponent) => {
+  return class extends Component {
+    render() {
+      let { user, ...passThroughProps } = this.props;
+      user = getLoggedInUser();
 
-  Нужно написать HOC, который передаст авторизованного
-  пользователя через проп user
+      return (
+        <WrappedComponent user={user} {...passThroughProps} />
+      )
+    }
+  }
+}
 
-  Чтобы получить текущего пользователя - используйте
-  метод `getLoggedInUser` из `utils`
+export const withSort = (WrappedComponent) => {
+  return class extends Component {
+    render() {
+      const { books } = this.props;
 
-  const user = getLoggedInUser()
-*/
+      books.sort((a, b) => {
+        let nameA = a.title.toUpperCase();
+        let nameB = b.title.toUpperCase();
+        
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
 
+        return 0;
+      });
 
-export const addLoggedInUser = () => {}
-
-/*
-  Помимо добавления новых пропов можно модифицировать те,
-  что уже были переданы в компонент
-
-  Мы будем передавать во WrappedComponent список книг
-  [{title: "Harry Potter", author: "J. K. Rowling"}, ...]
-
-  Ваша задача написать HOC, который перехватит prop books,
-  отсортирует по названиям по алфавиту
-  и передаст в обёрнутый компонент
-*/
-
-export const withSort = () => {}
+      return (
+        <WrappedComponent books={books} />
+      )
+    }
+  }
+}
