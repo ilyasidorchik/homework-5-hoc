@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 
-/*
-  Напишите простой HOC и укажите для него displayName
-*/
+function HOCMockComponent(WrappedComponent) {
+  return class extends Component {
+    static displayName = 'MockComponent';
 
-export const withDisplayName = () => {}
+    render() {
+      return (
+        <WrappedComponent />
+      )
+    };
+  };
+}
+
+class Stateless extends Component {
+  render() {
+    return <p>Text</p>;
+  }
+}
+
+Stateless = HOCMockComponent(Stateless);
+
+export const withDisplayName = (HOCMockComponent) => {}
