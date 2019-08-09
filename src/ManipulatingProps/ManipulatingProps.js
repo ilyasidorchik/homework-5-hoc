@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
-import {getLoggedInUser} from '../utils'
-
-/*
-  Манипуляция пропами
-
-  Первый HOC который нужно написать - enchancer.
-  
-  Он будет принимать проп loading и в зависимости
-  от его значения показывать прелоадер,
-  или обёрнутый компонент
-*/
+import { getLoggedInUser } from '../utils'
+import { render } from '@testing-library/react';
 
 const LoadingSpinner = () => <div>Loading...</div>;
 
-export const withLoading = () => {}
+export const withLoading = (WrappedComponent) => {
+  return class extends Component {
+    render() {
+      const { loading } = this.props;
+
+      return (
+        loading
+        ? <LoadingSpinner />
+        : <WrappedComponent {...this.props} />
+      )
+    };
+  }
+  
+
+  
+}
 
 /*
   Следующий HOC - injector, его особенность в том,
