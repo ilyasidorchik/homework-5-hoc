@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 
-function HOCMockComponent(WrappedComponent) {
-  return class extends Component {
-    static displayName = 'MockComponent';
-
+export const withDisplayName = (WrappedComponent) => {
+  class WithDisplayName extends Component {
     render() {
       return (
         <WrappedComponent />
       )
     };
   };
+
+  WithDisplayName.displayName = `HOC${getDisplayName(WrappedComponent)}`;
+
+  return WithDisplayName;
 }
 
-class Stateless extends Component {
-  render() {
-    return <p>Text</p>;
-  }
+const getDisplayName = (WrappedComponent) => {
+  return WrappedComponent.displayName || 'Component';
 }
-
-Stateless = HOCMockComponent(Stateless);
-
-export const withDisplayName = (HOCMockComponent) => {}
