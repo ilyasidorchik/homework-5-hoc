@@ -13,6 +13,7 @@
     "build": "react-scripts build",
     "lint": "eslint src/**/*.js --max-warnings=0",
     "test": "react-scripts test --env=jsdom",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
@@ -27,3 +28,10 @@
     "eslint-plugin-react-perf": "^2.0.9"
   }
 }
+
+
+
+
+
+
+
